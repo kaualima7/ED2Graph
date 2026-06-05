@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include "graph.h"
 
 void exibirGrafo();
 void encontrarMenorCaminho();

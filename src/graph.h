@@ -1,23 +1,31 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
-//estrutura para representar um nó na lista de adjacências
-typedef struct AdjNode { 
-    int destino;
-    struct AdjNode *prox;
-} AdjNode;
+#include <string>
+#include <vector>
 
-//estrutura para representar um vértice do grafo
-typedef struct Vertex { 
-    char ip[16];
-    AdjNode *listaAdj;
-} Vertex;
+struct Vertex {
+    std::string ip;
+    std::vector<int> adj;
+};
 
-//estrutura para representar o grafo
-typedef struct Graph { 
-    Vertex *vertices;
-    int numVertices;
+class Graph {
+private:
+    std::vector<Vertex> vertices;
     int numArestas;
-} Graph;
+
+public:
+    Graph();
+
+    int obterIndiceIP(const std::string& ip);
+
+    void adicionarAresta(const std::string& origem,
+                         const std::string& destino);
+
+    bool arestaExiste(int origem, int destino) const;
+
+    int getNumVertices() const;
+    int getNumArestas() const;
+};
 
 #endif
