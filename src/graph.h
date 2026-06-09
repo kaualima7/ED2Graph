@@ -4,12 +4,14 @@
 #include <string>
 #include <vector>
 
-struct Vertex {
+struct Vertex
+{
     std::string ip;
     std::vector<int> adj;
 };
 
-class Graph {
+class Graph
+{
 private:
     std::vector<Vertex> vertices;
     int numArestas;
@@ -17,15 +19,23 @@ private:
 public:
     Graph();
 
-    int obterIndiceIP(const std::string& ip);
+    // busca um IP e retorna seu índice.
+    // caso não exista, cria um novo vértice.
+    int obterIndiceIP(const std::string &ip);
 
-    void adicionarAresta(const std::string& origem,
-                         const std::string& destino);
+    // adiciona uma aresta direcionada
+    void adicionarAresta(const std::string &origem,
+                         const std::string &destino);
 
+    // verifica se a aresta já existe
     bool arestaExiste(int origem, int destino) const;
 
+    // getters
     int getNumVertices() const;
     int getNumArestas() const;
+
+    // acesso aos vértices (útil para BFS e Graphviz)
+    const std::vector<Vertex> &getVertices() const;
 };
 
 #endif
