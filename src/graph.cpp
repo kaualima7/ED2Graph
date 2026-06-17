@@ -1,4 +1,5 @@
 #include "graph.h"
+#include <algorithm>
 
 Graph::Graph()
 {
@@ -62,6 +63,7 @@ std::vector<int> Graph::menorCaminho(
     fila.push(idxOrigem);
 
     bool encontrou = false; // variavel pra guardar quando achar, que fara parar o loop
+
     while (!fila.empty())
     {
         int atual = fila.front();
@@ -75,11 +77,37 @@ std::vector<int> Graph::menorCaminho(
 
         for (int vizinho : vertices[atual].adj)
         {
-            
+            // visita apenas vertices que ainda nao foram visitados
+            if (!visitado[vizinho])
+            {
+                visitado[vizinho] = true;
+
+                // guarda quem descobriu esse vertice
+                predecessor[vizinho] = atual;
+
+                fila.push(vizinho);
+            }
         }
     }
 
-    return {}; // temporario
+    // se nao encontrou caminho entre origem e destino
+    if (!encontrou)
+    {
+        return {};
+    }
+
+    std::vector<int> caminho;
+
+    // reconstrucao do caminho usando o vetor predecessor
+    for (int v = idxDestino; v != -1; v = predecessor[v])
+    {
+        caminho.push_back(v);
+    }
+
+    // inverte para ficar da origem ate o destino
+    std::reverse(caminho.begin(), caminho.end());
+
+    return caminho;
 }
 
 bool Graph::arestaExiste(int origem, int destino) const
@@ -123,4 +151,10 @@ int Graph::getNumArestas() const
 const std::vector<Vertex> &Graph::getVertices() const
 {
     return vertices;
+}
+
+// retorna o IP associado ao indice do vertice
+std::string Graph::obterIP(int indice) const
+{
+    return vertices[indice].ip;
 }

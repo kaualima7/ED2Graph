@@ -44,6 +44,8 @@ public:
 
     // acesso aos vértices (útil para BFS e Graphviz)
     const std::vector<Vertex> &getVertices() const;
+
+    std::string obterIP(int indice) const;
 };
 
 #endif

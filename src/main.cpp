@@ -89,5 +89,42 @@ int main(int argc, char *argv[])
               << grafo.getNumArestas()
               << "\n";
 
+    // teste da funcionalidade de menor caminho
+
+    std::string origem;
+    std::string destino;
+
+    std::cout << "\nDigite o IP de origem: ";
+    std::cin >> origem;
+
+    std::cout << "Digite o IP de destino: ";
+    std::cin >> destino;
+
+    std::vector<int> caminho =
+        grafo.menorCaminho(origem, destino);
+
+    if (caminho.empty())
+    {
+        std::cout << "\nNenhum caminho encontrado.\n";
+    }
+    else
+    {
+        std::cout << "\nCaminho encontrado ("
+                  << caminho.size() - 1
+                  << " saltos):\n";
+
+        for (int i = 0; i < caminho.size(); i++)
+        {
+            std::cout << grafo.obterIP(caminho[i]);
+
+            if (i < caminho.size() - 1)
+            {
+                std::cout << " -> ";
+            }
+        }
+
+        std::cout << "\n";
+    }
+
     return 0;
 }
