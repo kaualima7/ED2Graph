@@ -60,11 +60,23 @@ std::vector<int> Graph::menorCaminho(
 
     visitado[idxOrigem] = true;
     fila.push(idxOrigem);
-    
+
+    bool encontrou = false; // variavel pra guardar quando achar, que fara parar o loop
     while (!fila.empty())
     {
         int atual = fila.front();
         fila.pop();
+
+        if (atual == idxDestino)
+        {
+            encontrou = true; // uso da variavel pra indicar q achou o menor caminho
+            break;
+        }
+
+        for (int vizinho : vertices[atual].adj)
+        {
+            
+        }
     }
 
     return {}; // temporario
