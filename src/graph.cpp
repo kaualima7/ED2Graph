@@ -24,7 +24,7 @@ int Graph::obterIndiceIP(const std::string &ip)
     return vertices.size() - 1;
 }
 
-//procura ip que ja existe no grafo (n cria novos vertices)
+// procura ip que ja existe no grafo (n cria novos vertices)
 int Graph::buscarIndiceIP(const std::string &ip) const
 {
     for (int i = 0; i < vertices.size(); i++)
@@ -38,19 +38,36 @@ int Graph::buscarIndiceIP(const std::string &ip) const
     return -1;
 }
 
-//encontra o menor caminho entre dois ips usando a bfs
-//retorna os indices dos vertices do caminho
+// encontra o menor caminho entre dois ips usando a bfs
+// retorna os indices dos vertices do caminho
 std::vector<int> Graph::menorCaminho(
     const std::string &origem,
     const std::string &destino) const
 {
     int idxOrigem = buscarIndiceIP(origem);
     int idxDestino = buscarIndiceIP(destino);
+
     if (idxOrigem == -1 || idxDestino == -1)
     {
         return {};
     }
-    return{}; //temporario
+
+    std::queue<int> fila;
+
+    std::vector<bool> visitado(vertices.size(), false);
+
+    std::vector<int> predecessor(vertices.size(), -1);
+
+    visitado[idxOrigem] = true;
+    fila.push(idxOrigem);
+    
+    while (!fila.empty())
+    {
+        int atual = fila.front();
+        fila.pop();
+    }
+
+    return {}; // temporario
 }
 
 bool Graph::arestaExiste(int origem, int destino) const

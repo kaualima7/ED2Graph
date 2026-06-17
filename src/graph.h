@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <queue>
 
 struct Vertex
 {
@@ -29,7 +30,7 @@ public:
     std::vector<int> menorCaminho(
         const std::string &origem,
         const std::string &destino) const;
-        
+
     // adiciona uma aresta direcionada
     void adicionarAresta(const std::string &origem,
                          const std::string &destino);
