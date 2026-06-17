@@ -23,6 +23,13 @@ public:
     // caso não exista, cria um novo vértice.
     int obterIndiceIP(const std::string &ip);
 
+    // busca sem criar vértice
+    int buscarIndiceIP(const std::string &ip) const;
+
+    std::vector<int> menorCaminho(
+        const std::string &origem,
+        const std::string &destino) const;
+        
     // adiciona uma aresta direcionada
     void adicionarAresta(const std::string &origem,
                          const std::string &destino);
