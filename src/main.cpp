@@ -89,6 +89,7 @@ int main(int argc, char *argv[])
               << grafo.getNumArestas()
               << "\n";
 
+    
     // teste da funcionalidade de menor caminho
 
     std::string origem;

@@ -8,32 +8,36 @@ Graph::Graph()
 
 int Graph::obterIndiceIP(const std::string &ip)
 {
+    auto it = mapIPs.find(ip);
 
-    for (int i = 0; i < vertices.size(); i++)
+    //ip ja existe
+    if (it != mapIPs.end())
     {
-        if (vertices[i].ip == ip)
-        {
-            return i;
-        }
+        return it->second;
     }
 
+    //cria novo vertice
     Vertex novo;
     novo.ip = ip;
 
     vertices.push_back(novo);
 
-    return vertices.size() - 1;
+    int novoIndice = vertices.size() - 1;
+
+    //registra no map
+    mapIPs[ip] = novoIndice;
+
+    return novoIndice;
 }
 
 // procura ip que ja existe no grafo (n cria novos vertices)
 int Graph::buscarIndiceIP(const std::string &ip) const
 {
-    for (int i = 0; i < vertices.size(); i++)
+    auto it = mapIPs.find(ip);
+
+    if (it != mapIPs.end())
     {
-        if (vertices[i].ip == ip)
-        {
-            return i;
-        }
+        return it->second;
     }
 
     return -1;

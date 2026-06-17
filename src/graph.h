@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <queue>
+#include <unordered_map>
 
 struct Vertex
 {
@@ -15,6 +16,7 @@ class Graph
 {
 private:
     std::vector<Vertex> vertices;
+    std::unordered_map<std::string, int> mapIPs;
     int numArestas;
 
 public:
@@ -45,6 +47,7 @@ public:
     // acesso aos vértices (útil para BFS e Graphviz)
     const std::vector<Vertex> &getVertices() const;
 
+    //retorna o ip associado ao indice do vertice
     std::string obterIP(int indice) const;
 };
 
