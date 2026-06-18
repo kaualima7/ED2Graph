@@ -35,7 +35,7 @@ void menuPrincipal(const Graph &grafo)
 
         } else if (opcao == "4"){
 
-        } else if( opcao == "0"){
+        } else{
             std::cout << "\nOpção inválida\n";
         }
     } while (opcao != "0");
