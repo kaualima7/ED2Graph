@@ -6,10 +6,40 @@
 
 #include "graph.h"
 
-void exibirGrafo();
-void encontrarMenorCaminho();
-void calcularDiametro();
-void identificarRoteadoresCriticos();
+void exibirGrafo(const Graph &grafo);
+void encontrarMenorCaminho(const Graph &grafo);
+void calcularDiametro(const Graph &grafo);
+void identificarRoteadoresCriticos(const Graph &grafo);
+void menuPrincipal(const Graph &grafo)
+{
+    std::string opcao;
+
+    do
+    {
+        std::cout << "\n=============================\n";
+        std::cout << "1 - Exibir Grafo\n";
+        std::cout << "2 - Menor caminho\n";
+        std::cout << "3 - Diâmetro\n";
+        std::cout << "4 - Roteadores Críticos\n";
+        std::cout << "0 - Sair\n";
+        std::cout << "=============================\n";
+
+        std::cout << "Escolha uma opção: ";
+        std::getline(std::cin, opcao);
+
+        if(opcao == "1"){
+
+        } else if (opcao == "2"){
+            encontrarMenorCaminho(grafo);
+        } else if (opcao == "3"){
+
+        } else if (opcao == "4"){
+
+        } else if( opcao == "0"){
+            std::cout << "\nOpção inválida\n";
+        }
+    } while (opcao != "0");
+}
 
 int main(int argc, char *argv[])
 {
@@ -82,50 +112,7 @@ int main(int argc, char *argv[])
 
     arquivo.close();
 
-    std::cout << "\nGrafo de roteamento inicializado!\n";
-    std::cout << "Vertices unicos (IPs): "
-              << grafo.getNumVertices()
-              << " | Arestas: "
-              << grafo.getNumArestas()
-              << "\n";
-
-    
-    // teste da funcionalidade de menor caminho
-
-    std::string origem;
-    std::string destino;
-
-    std::cout << "\nDigite o IP de origem: ";
-    std::cin >> origem;
-
-    std::cout << "Digite o IP de destino: ";
-    std::cin >> destino;
-
-    std::vector<int> caminho =
-        grafo.menorCaminho(origem, destino);
-
-    if (caminho.empty())
-    {
-        std::cout << "\nNenhum caminho encontrado.\n";
-    }
-    else
-    {
-        std::cout << "\nCaminho encontrado ("
-                  << caminho.size() - 1
-                  << " saltos):\n";
-
-        for (int i = 0; i < caminho.size(); i++)
-        {
-            std::cout << grafo.obterIP(caminho[i]);
-
-            if (i < caminho.size() - 1)
-            {
-                std::cout << " -> ";
-            }
-        }
-
-        std::cout << "\n";
-    }
+    menuPrincipal(grafo);
 
     return 0;
 }
