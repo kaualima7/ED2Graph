@@ -5,6 +5,7 @@
 #include <vector>
 #include <queue>
 #include <unordered_map>
+#include <utility>
 
 struct Vertex
 {
@@ -49,6 +50,9 @@ public:
 
     //retorna o ip associado ao indice do vertice
     std::string obterIP(int indice) const;
+
+    std::vector<std::pair<std::string, int>>
+    topRoteadoresCriticos(int quantidade = 5) const;
 };
 
 #endif

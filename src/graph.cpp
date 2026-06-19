@@ -162,3 +162,40 @@ std::string Graph::obterIP(int indice) const
 {
     return vertices[indice].ip;
 }
+
+std::vector<std::pair<std::string, int>>
+Graph::topRoteadoresCriticos(int quantidade) const
+{
+    std::vector<int> grauEntrada(vertices.size(), 0);
+
+    for (int i = 0; i < vertices.size(); i++)
+    {
+        for (int vizinho : vertices[i].adj)
+        {
+            grauEntrada[vizinho]++;
+        }
+    }
+
+    std::vector<std::pair<std::string, int>> resultado;
+
+    for (int i = 0; i < vertices.size(); i++)
+    {
+        resultado.push_back(
+            {vertices[i].ip, grauEntrada[i]});
+    }
+
+    std::sort(
+        resultado.begin(),
+        resultado.end(),
+        [](const auto &a, const auto &b)
+        {
+            return a.second > b.second;
+        });
+
+    if (resultado.size() > quantidade)
+    {
+        resultado.resize(quantidade);
+    }
+
+    return resultado;
+}

@@ -10,6 +10,70 @@ void exibirGrafo(const Graph &grafo);
 void encontrarMenorCaminho(const Graph &grafo);
 void calcularDiametro(const Graph &grafo);
 void identificarRoteadoresCriticos(const Graph &grafo);
+
+void exibirGrafo(const Graph &grafo)
+{
+    std::cout << "\nFuncionalidade em desenvolvimento.\n";
+}
+
+void encontrarMenorCaminho(const Graph &grafo)
+{
+    std::string origem;
+    std::string destino;
+
+    std::cout << "\nDigite o IP de origem: ";
+    std::getline(std::cin, origem);
+
+    std::cout << "Digite o IP de destino: ";
+    std::getline(std::cin, destino);
+
+    std::vector<int> caminho =
+        grafo.menorCaminho(origem, destino);
+
+    if (caminho.empty())
+    {
+        std::cout << "\nNenhum caminho encontrado.\n";
+        return;
+    }
+
+    std::cout << "\nCaminho encontrado ("
+              << caminho.size() - 1
+              << " saltos):\n";
+
+    for (int i = 0; i < caminho.size(); i++)
+    {
+        std::cout << grafo.obterIP(caminho[i]);
+
+        if (i < caminho.size() - 1)
+        {
+            std::cout << " -> ";
+        }
+    }
+
+    std::cout << "\n";
+}
+
+void calcularDiametro(const Graph &grafo)
+{
+    std::cout << "\nFuncionalidade em desenvolvimento.\n";
+}
+
+void identificarRoteadoresCriticos(const Graph &grafo)
+{
+    auto top = grafo.topRoteadoresCriticos();
+
+    std::cout << "\nTop 5 roteadores críticos:\n\n";
+
+    for (const auto &item : top)
+    {
+        std::cout
+            << item.first
+            << " | Grau de Entrada: "
+            << item.second
+            << "\n";
+    }
+}
+
 void menuPrincipal(const Graph &grafo)
 {
     std::string opcao;
@@ -27,17 +91,27 @@ void menuPrincipal(const Graph &grafo)
         std::cout << "Escolha uma opção: ";
         std::getline(std::cin, opcao);
 
-        if(opcao == "1"){
-
-        } else if (opcao == "2"){
+        if (opcao == "1")
+        {
+            exibirGrafo(grafo);
+        }
+        else if (opcao == "2")
+        {
             encontrarMenorCaminho(grafo);
-        } else if (opcao == "3"){
-
-        } else if (opcao == "4"){
-
-        } else{
+        }
+        else if (opcao == "3")
+        {
+            calcularDiametro(grafo);
+        }
+        else if (opcao == "4")
+        {
+            identificarRoteadoresCriticos(grafo);
+        }
+        else if (opcao != "0")
+        {
             std::cout << "\nOpção inválida\n";
         }
+
     } while (opcao != "0");
 }
 
@@ -111,6 +185,13 @@ int main(int argc, char *argv[])
     }
 
     arquivo.close();
+
+    std::cout << "\nGrafo de roteamento inicializado!\n";
+    std::cout << "Vertices unicos (IPs): "
+              << grafo.getNumVertices()
+              << " | Arestas: "
+              << grafo.getNumArestas()
+              << "\n";
 
     menuPrincipal(grafo);
 
