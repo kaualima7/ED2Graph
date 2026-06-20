@@ -10,13 +10,13 @@ int Graph::obterIndiceIP(const std::string &ip)
 {
     auto it = mapIPs.find(ip);
 
-    //ip ja existe
+    // ip ja existe
     if (it != mapIPs.end())
     {
         return it->second;
     }
 
-    //cria novo vertice
+    // cria novo vertice
     Vertex novo;
     novo.ip = ip;
 
@@ -24,7 +24,7 @@ int Graph::obterIndiceIP(const std::string &ip)
 
     int novoIndice = vertices.size() - 1;
 
-    //registra no map
+    // registra no map
     mapIPs[ip] = novoIndice;
 
     return novoIndice;
@@ -138,6 +138,7 @@ void Graph::adicionarAresta(const std::string &origem,
     if (!arestaExiste(idxOrigem, idxDestino))
     {
         vertices[idxOrigem].adj.push_back(idxDestino);
+        vertices[idxDestino].indegree++;
         numArestas++;
     }
 }
@@ -166,22 +167,13 @@ std::string Graph::obterIP(int indice) const
 std::vector<std::pair<std::string, int>>
 Graph::topRoteadoresCriticos(int quantidade) const
 {
-    std::vector<int> grauEntrada(vertices.size(), 0);
-
-    for (int i = 0; i < vertices.size(); i++)
-    {
-        for (int vizinho : vertices[i].adj)
-        {
-            grauEntrada[vizinho]++;
-        }
-    }
-
     std::vector<std::pair<std::string, int>> resultado;
 
     for (int i = 0; i < vertices.size(); i++)
     {
         resultado.push_back(
-            {vertices[i].ip, grauEntrada[i]});
+            {vertices[i].ip,
+             vertices[i].indegree});
     }
 
     std::sort(
@@ -189,7 +181,12 @@ Graph::topRoteadoresCriticos(int quantidade) const
         resultado.end(),
         [](const auto &a, const auto &b)
         {
-            return a.second > b.second;
+            if (a.second != b.second)
+            {
+                return a.second > b.second;
+            }
+
+            return a.first < b.first;
         });
 
     if (resultado.size() > quantidade)

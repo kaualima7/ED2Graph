@@ -11,6 +11,7 @@ struct Vertex
 {
     std::string ip;
     std::vector<int> adj;
+    int indegree = 0;
 };
 
 class Graph
