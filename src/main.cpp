@@ -13,7 +13,39 @@ void identificarRoteadoresCriticos(const Graph &grafo);
 
 void exibirGrafo(const Graph &grafo)
 {
-    std::cout << "\nFuncionalidade em desenvolvimento.\n";
+    const auto &vertices = grafo.getVertices();
+
+    std::cout << "\n=== Grafo de Roteamento ===\n\n";
+
+    for (int i = 0; i < vertices.size(); i++)
+    {
+        std::cout << vertices[i].ip << " -> ";
+
+        if (vertices[i].adj.empty())
+        {
+            std::cout << "(sem conexoes)";
+        }
+        else
+        {
+            for (int j = 0; j < vertices[i].adj.size(); j++)
+            {
+                std::cout << grafo.obterIP(vertices[i].adj[j]);
+
+                if (j < vertices[i].adj.size() - 1)
+                {
+                    std::cout << ", ";
+                }
+            }
+        }
+
+        std::cout << "\n";
+    }
+
+    std::cout << "\nTotal de vertices: "
+              << grafo.getNumVertices()
+              << "\nTotal de arestas: "
+              << grafo.getNumArestas()
+              << "\n";
 }
 
 void encontrarMenorCaminho(const Graph &grafo)
