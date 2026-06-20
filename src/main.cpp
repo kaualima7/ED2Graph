@@ -55,7 +55,11 @@ void encontrarMenorCaminho(const Graph &grafo)
 
 void calcularDiametro(const Graph &grafo)
 {
-    std::cout << "\nFuncionalidade em desenvolvimento.\n";
+    int diametro = grafo.calcularDiametro();
+
+    std::cout << "\nDiametro da rede: "
+              << diametro
+              << " saltos\n";
 }
 
 void identificarRoteadoresCriticos(const Graph &grafo)

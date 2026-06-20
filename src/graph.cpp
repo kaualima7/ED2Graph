@@ -114,6 +114,62 @@ std::vector<int> Graph::menorCaminho(
     return caminho;
 }
 
+int Graph::bfsMaiorDistancia(int origem) const
+{
+    // mesma fila da bfs usada na função anterior
+    std::queue<int> fila;
+
+    // pra nao visitar o mesmo vertice duas vezes
+    std::vector<bool> visitado(vertices.size(), false);
+
+    // diferente de antes, agora armazena a distancia e nao o predecessor
+    std::vector<int> distancia(vertices.size(), 0);
+
+    visitado[origem] = true;
+    fila.push(origem);
+
+    int maiorDistancia = 0;
+
+    while (!fila.empty())
+    {
+        int atual = fila.front();
+        fila.pop();
+
+        for (int vizinho : vertices[atual].adj)
+        {
+            if (!visitado[vizinho])
+            {
+                visitado[vizinho] = true;
+
+                distancia[vizinho] =
+                    distancia[atual] + 1;
+
+                if (distancia[vizinho] > maiorDistancia)
+                {
+                    maiorDistancia = distancia[vizinho];
+                }
+
+                fila.push(vizinho);
+            }
+        }
+    }
+
+    return maiorDistancia;
+}
+
+int Graph::calcularDiametro() const
+{
+    int diametro = 0;
+    for (int i=0; i<vertices.size(); i++){
+        int distancia = bfsMaiorDistancia(i);
+
+        if(distancia > diametro){
+            diametro = distancia;
+        }
+    }
+    return diametro;
+}
+
 bool Graph::arestaExiste(int origem, int destino) const
 {
 

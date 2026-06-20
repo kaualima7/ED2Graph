@@ -21,6 +21,8 @@ private:
     std::unordered_map<std::string, int> mapIPs;
     int numArestas;
 
+    int bfsMaiorDistancia(int origem) const;
+
 public:
     Graph();
 
@@ -34,6 +36,8 @@ public:
     std::vector<int> menorCaminho(
         const std::string &origem,
         const std::string &destino) const;
+    
+    int calcularDiametro() const;
 
     // adiciona uma aresta direcionada
     void adicionarAresta(const std::string &origem,
@@ -45,6 +49,7 @@ public:
     // getters
     int getNumVertices() const;
     int getNumArestas() const;
+
 
     // acesso aos vértices (útil para BFS e Graphviz)
     const std::vector<Vertex> &getVertices() const;
