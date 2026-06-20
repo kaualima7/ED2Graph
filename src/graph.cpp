@@ -1,5 +1,6 @@
 #include "graph.h"
 #include <algorithm>
+#include <fstream>
 
 Graph::Graph()
 {
@@ -160,14 +161,51 @@ int Graph::bfsMaiorDistancia(int origem) const
 int Graph::calcularDiametro() const
 {
     int diametro = 0;
-    for (int i=0; i<vertices.size(); i++){
+    for (int i = 0; i < vertices.size(); i++)
+    {
         int distancia = bfsMaiorDistancia(i);
 
-        if(distancia > diametro){
+        if (distancia > diametro)
+        {
             diametro = distancia;
         }
     }
     return diametro;
+}
+
+void Graph::exportarGraphviz(const std::string &nomeArquivo) const
+{
+    std::ofstream arquivo(nomeArquivo);
+
+    if (!arquivo.is_open())
+    {
+        return;
+    }
+
+    arquivo << "digraph G {\n";
+
+    for (int i = 0; i < vertices.size(); i++)
+    {
+        if (vertices[i].adj.empty())
+        {
+            arquivo << "    \""
+                    << vertices[i].ip
+                    << "\";\n";
+        }
+
+        for (int vizinho : vertices[i].adj)
+        {
+            arquivo << "    \""
+                    << vertices[i].ip
+                    << "\" -> \""
+                    << vertices[vizinho].ip
+                    << "\";\n";
+        }
+    }
+
+    arquivo << "}\n";
+
+    arquivo.close();
 }
 
 bool Graph::arestaExiste(int origem, int destino) const

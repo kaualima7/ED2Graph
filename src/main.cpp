@@ -121,6 +121,7 @@ void menuPrincipal(const Graph &grafo)
         std::cout << "2 - Menor caminho\n";
         std::cout << "3 - Diâmetro\n";
         std::cout << "4 - Roteadores Críticos\n";
+        std::cout << "5 - Exportar Graphviz\n";
         std::cout << "0 - Sair\n";
         std::cout << "=============================\n";
 
@@ -142,6 +143,13 @@ void menuPrincipal(const Graph &grafo)
         else if (opcao == "4")
         {
             identificarRoteadoresCriticos(grafo);
+        }
+        else if (opcao == "5")
+        {
+            grafo.exportarGraphviz("rede.dot");
+
+            std::cout
+                << "\nArquivo rede.dot gerado com sucesso.\n";
         }
         else if (opcao != "0")
         {

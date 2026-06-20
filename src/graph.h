@@ -36,8 +36,11 @@ public:
     std::vector<int> menorCaminho(
         const std::string &origem,
         const std::string &destino) const;
-    
+
     int calcularDiametro() const;
+
+    // exporta o grafo para arquivo Graphviz (.dot)
+    void exportarGraphviz(const std::string &nomeArquivo) const;
 
     // adiciona uma aresta direcionada
     void adicionarAresta(const std::string &origem,
@@ -49,7 +52,6 @@ public:
     // getters
     int getNumVertices() const;
     int getNumArestas() const;
-
 
     // acesso aos vértices (útil para BFS e Graphviz)
     const std::vector<Vertex> &getVertices() const;
