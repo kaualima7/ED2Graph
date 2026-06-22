@@ -39,8 +39,24 @@ public:
 
     int calcularDiametro() const;
 
-    // exporta o grafo para arquivo Graphviz (.dot)
-    void exportarGraphviz(const std::string &nomeArquivo) const;
+    void abrirArquivo(const std::string &arquivo) const;
+    void mostrarTela(
+    const std::string &arquivoDot) const;
+
+    void exportarGraphviz(
+        const std::string &nomeArquivo) const;
+
+    void exportarMenorCaminhoGraphviz(
+        const std::string &nomeArquivo,
+        const std::vector<int> &caminho) const;
+
+    void gerarPNG(
+        const std::string &arquivoDot,
+        const std::string &arquivoPNG) const;
+
+    void gerarPDF(
+        const std::string &arquivoDot,
+        const std::string &arquivoPDF) const;
 
     // adiciona uma aresta direcionada
     void adicionarAresta(const std::string &origem,
@@ -56,7 +72,7 @@ public:
     // acesso aos vértices (útil para BFS e Graphviz)
     const std::vector<Vertex> &getVertices() const;
 
-    //retorna o ip associado ao indice do vertice
+    // retorna o ip associado ao indice do vertice
     std::string obterIP(int indice) const;
 
     std::vector<std::pair<std::string, int>>

@@ -1,6 +1,9 @@
 #include "graph.h"
 #include <algorithm>
 #include <fstream>
+#include <cstdlib>
+#include <iostream>
+#include <queue>
 
 Graph::Graph()
 {
@@ -182,7 +185,11 @@ void Graph::exportarGraphviz(const std::string &nomeArquivo) const
         return;
     }
 
-    arquivo << "digraph G {\n";
+    arquivo << "digraph Rede {\n";
+    arquivo << "    rankdir=LR;\n";
+    arquivo << "\n";
+    arquivo << "    node [shape=ellipse];\n";
+    arquivo << "    edge [color=black];\n\n";
 
     for (int i = 0; i < vertices.size(); i++)
     {
@@ -206,6 +213,130 @@ void Graph::exportarGraphviz(const std::string &nomeArquivo) const
     arquivo << "}\n";
 
     arquivo.close();
+}
+
+void Graph::abrirArquivo(
+    const std::string &arquivo) const
+{
+    std::string comando =
+        "xdg-open " + arquivo + " >/dev/null 2>&1 &";
+
+    system(comando.c_str());
+}
+
+void Graph::mostrarTela(
+    const std::string &arquivoDot) const
+{
+    std::string comando =
+        "dot -Tx11 " + arquivoDot;
+
+    system(comando.c_str());
+}
+
+void Graph::exportarMenorCaminhoGraphviz(
+    const std::string &nomeArquivo,
+    const std::vector<int> &caminho) const
+{
+    std::ofstream arquivo(nomeArquivo);
+
+    if (!arquivo.is_open())
+    {
+        return;
+    }
+
+    arquivo << "digraph Rede {\n";
+    arquivo << "    rankdir=LR;\n\n";
+    arquivo << "    node [shape=ellipse];\n";
+    arquivo << "    edge [color=black];\n\n";
+
+    // destaca vertices do caminho
+    for (int indice : caminho)
+    {
+        arquivo << "    \""
+                << vertices[indice].ip
+                << "\" [style=filled, fillcolor=gold];\n";
+    }
+
+    arquivo << "\n";
+
+    for (int i = 0; i < vertices.size(); i++)
+    {
+        if (vertices[i].adj.empty())
+        {
+            arquivo << "    \""
+                    << vertices[i].ip
+                    << "\";\n";
+        }
+
+        for (int vizinho : vertices[i].adj)
+        {
+            bool arestaCaminho = false;
+
+            for (int j = 0; j < caminho.size() - 1; j++)
+            {
+                if (i == caminho[j] &&
+                    vizinho == caminho[j + 1])
+                {
+                    arestaCaminho = true;
+                    break;
+                }
+            }
+
+            arquivo << "    \""
+                    << vertices[i].ip
+                    << "\" -> \""
+                    << vertices[vizinho].ip
+                    << "\"";
+
+            if (arestaCaminho)
+            {
+                arquivo
+                    << " [color=red, penwidth=3]";
+            }
+
+            arquivo << ";\n";
+        }
+    }
+
+    arquivo << "}\n";
+
+    arquivo.close();
+}
+
+void Graph::gerarPNG(
+    const std::string &arquivoDot,
+    const std::string &arquivoPNG) const
+{
+    std::string comando =
+        "dot -Tpng " +
+        arquivoDot +
+        " -o " +
+        arquivoPNG;
+
+    int resultado = system(comando.c_str());
+
+    if (resultado != 0)
+    {
+        std::cout << "\nErro ao gerar png\n";
+    }
+}
+
+void Graph::gerarPDF(
+    const std::string &arquivoDot,
+    const std::string &arquivoPDF) const
+{
+    std::string comando =
+        "dot -Tpdf " +
+        arquivoDot +
+        " -o " +
+        arquivoPDF;
+
+    int resultado = system(comando.c_str());
+
+    if (resultado != 0)
+    {
+        std::cout << "\nErro ao gerar pdf\n";
+    }
 }
 
 bool Graph::arestaExiste(int origem, int destino) const

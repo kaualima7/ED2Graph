@@ -10,6 +10,76 @@ void exibirGrafo(const Graph &grafo);
 void encontrarMenorCaminho(const Graph &grafo);
 void calcularDiametro(const Graph &grafo);
 void identificarRoteadoresCriticos(const Graph &grafo);
+void menuFormatoGraphviz(const Graph &grafo)
+{
+    std::string opcao;
+
+    do
+    {
+        std::cout << "\n===== FORMATOS =====\n";
+        std::cout << "1 - Tela\n";
+        std::cout << "2 - Png\n";
+        std::cout << "3 - Pdf\n";
+        std::cout << "0 - Voltar\n";
+
+        std::cout << "Escolha uma opcao: ";
+        std::getline(std::cin, opcao);
+
+        if (opcao == "1")
+        {
+            grafo.exportarGraphviz("rede.dot");
+            grafo.mostrarTela("rede.dot");
+        }
+        else if (opcao == "2")
+        {
+            grafo.exportarGraphviz("rede.dot");
+            grafo.gerarPNG("rede.dot", "rede.png");
+            grafo.abrirArquivo("rede.png");
+        }
+        else if (opcao == "3")
+        {
+            grafo.exportarGraphviz("rede.dot");
+            grafo.gerarPDF("rede.dot", "rede.pdf");
+            grafo.abrirArquivo("rede.pdf");
+        }
+        else if (opcao != "0")
+        {
+            std::cout << "\nOpcao invalida.\n";
+        }
+
+    } while (opcao != "0");
+}
+
+void menuGraphviz(const Graph &grafo)
+{
+    std::string opcao;
+
+    do
+    {
+        std::cout << "\n===== VISUALIZACAO =====\n";
+        std::cout << "1 - Grafo Completo\n";
+        std::cout << "2 - Menor Caminho\n";
+        std::cout << "0 - Voltar\n";
+
+        std::cout << "Escolha uma opcao: ";
+        std::getline(std::cin, opcao);
+
+        if (opcao == "1")
+        {
+            menuFormatoGraphviz(grafo);
+        }
+        else if (opcao == "2")
+        {
+            std::cout
+                << "\nUsar a funcionalidade >>Menor Caminho<< para gerar a visualizacao destacada\n";
+        }
+        else if (opcao != "0")
+        {
+            std::cout << "\nOpcao invalida.\n";
+        }
+
+    } while (opcao != "0");
+}
 
 void exibirGrafo(const Graph &grafo)
 {
@@ -83,6 +153,63 @@ void encontrarMenorCaminho(const Graph &grafo)
     }
 
     std::cout << "\n";
+
+    std::cout << "\n";
+
+    std::string opcao;
+
+    do
+    {
+        std::cout << "\n===== FORMATOS =====\n";
+        std::cout << "1 - Tela\n";
+        std::cout << "2 - Png\n";
+        std::cout << "3 - Pdf\n";
+        std::cout << "0 - Voltar\n";
+
+        std::cout << "Escolha uma opcao: ";
+        std::getline(std::cin, opcao);
+
+        if (opcao == "1")
+        {
+            grafo.exportarMenorCaminhoGraphviz(
+                "menor_caminho.dot",
+                caminho);
+
+            grafo.mostrarTela(
+                "menor_caminho.dot");
+        }
+        else if (opcao == "2")
+        {
+            grafo.exportarMenorCaminhoGraphviz(
+                "menor_caminho.dot",
+                caminho);
+
+            grafo.gerarPNG(
+                "menor_caminho.dot",
+                "menor_caminho.png");
+
+            grafo.abrirArquivo(
+                "menor_caminho.png");
+        }
+        else if (opcao == "3")
+        {
+            grafo.exportarMenorCaminhoGraphviz(
+                "menor_caminho.dot",
+                caminho);
+
+            grafo.gerarPDF(
+                "menor_caminho.dot",
+                "menor_caminho.pdf");
+
+            grafo.abrirArquivo(
+                "menor_caminho.pdf");
+        }
+        else if (opcao != "0")
+        {
+            std::cout << "\nOpcao invalida.\n";
+        }
+
+    } while (opcao != "0");
 }
 
 void calcularDiametro(const Graph &grafo)
@@ -121,7 +248,7 @@ void menuPrincipal(const Graph &grafo)
         std::cout << "2 - Menor caminho\n";
         std::cout << "3 - Diâmetro\n";
         std::cout << "4 - Roteadores Críticos\n";
-        std::cout << "5 - Exportar Graphviz\n";
+        std::cout << "5 - Visualização Graphviz\n";
         std::cout << "0 - Sair\n";
         std::cout << "=============================\n";
 
@@ -146,10 +273,7 @@ void menuPrincipal(const Graph &grafo)
         }
         else if (opcao == "5")
         {
-            grafo.exportarGraphviz("rede.dot");
-
-            std::cout
-                << "\nArquivo rede.dot gerado com sucesso.\n";
+            menuGraphviz(grafo);
         }
         else if (opcao != "0")
         {
